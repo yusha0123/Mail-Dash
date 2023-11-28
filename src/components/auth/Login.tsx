@@ -1,14 +1,9 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { TextFieldError } from "@/components/ui/text-field-error";
 import { Eye, EyeOff } from "lucide-react";
-import {
-  FieldValues,
-  useForm,
-  Merge,
-  FieldError,
-  FieldErrorsImpl,
-} from "react-hook-form";
+import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -19,31 +14,13 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const TextFieldError = ({
-    error,
-  }: {
-    error?:
-      | string
-      | FieldError
-      | Merge<FieldError, FieldErrorsImpl>
-      | undefined;
-  }) => {
-    return (
-      error && (
-        <p className="text-red-500 my-2 text-center text-xs">
-          {error.toString()}
-        </p>
-      )
-    );
-  };
-
   const onSubmit = (values: FieldValues) => {
     console.log(values);
   };
 
   return (
     <form
-      className="py-2 px-1 space-y-5 my-4"
+      className="py-2 px-1 space-y-4 my-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>

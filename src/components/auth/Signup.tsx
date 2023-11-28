@@ -1,65 +1,34 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { TextFieldError } from "@/components/ui/text-field-error";
+import { auth } from "@/lib/firebase";
 import { Eye, EyeOff } from "lucide-react";
-import {
-  FieldValues,
-  useForm,
-  Merge,
-  FieldError,
-  FieldErrorsImpl,
-} from "react-hook-form";
+import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import useCreateUserWithEmailAndPassword from "@/hooks/useCreateUserWithEmailAndPassword";
 
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showPassword1, setShowPassword1] = useState<boolean>(false);
+  const [showPassword2, setShowPassword2] = useState<boolean>(false);
   const {
     register,
     reset,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
-
-  const TextFieldError = ({
-    error,
-  }: {
-    error?:
-      | string
-      | FieldError
-      | Merge<FieldError, FieldErrorsImpl>
-      | undefined;
-  }) => {
-    return (
-      error && (
-        <p className="text-red-500 my-2 text-center text-xs">
-          {error.toString()}
-        </p>
-      )
-    );
-  };
+  const [createUserWithEmailAndPassword, loading] =
+    useCreateUserWithEmailAndPassword(auth);
 
   const onSubmit = (values: FieldValues) => {
-    console.log(values);
+    createUserWithEmailAndPassword(values.email, values.password);
   };
 
   return (
     <form
-      className="py-2 px-1 space-y-5 my-4"
+      className="py-2 px-1 space-y-4 my-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div>
-        <Input
-          placeholder="Enter your name"
-          {...register("name", {
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Please enter a valid name",
-            },
-          })}
-          autoComplete="off"
-        />
-        <TextFieldError error={errors.name?.message} />
-      </div>
       <div>
         <Input
           placeholder="Enter your email"
@@ -79,7 +48,7 @@ const Signup = () => {
         <div className="relative">
           <Input
             placeholder="Choose a password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword1 ? "text" : "password"}
             className="pr-12"
             {...register("password", {
               required: "Password is required",
@@ -94,10 +63,10 @@ const Signup = () => {
             size={"icon"}
             variant={"ghost"}
             type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
+            onClick={() => setShowPassword1((prev) => !prev)}
             className="absolute top-0 right-0 flex h-full items-center px-2"
           >
-            {showPassword ? (
+            {showPassword1 ? (
               <EyeOff className="h-4 w-4" />
             ) : (
               <Eye className="h-4 w-4" />
@@ -106,7 +75,36 @@ const Signup = () => {
         </div>
         <TextFieldError error={errors.password?.message} />
       </div>
-      <Button className="w-full" type="submit">
+      <div>
+        <div className="relative">
+          <Input
+            placeholder="Confirm your password"
+            type={showPassword2 ? "text" : "password"}
+            className="pr-12"
+            {...register("confirmPassword", {
+              required: "Password confirmation is required",
+              validate: (value) =>
+                value === getValues("password") || "Passwords must match",
+            })}
+            autoComplete="off"
+          />
+          <Button
+            size={"icon"}
+            variant={"ghost"}
+            type="button"
+            onClick={() => setShowPassword2((prev) => !prev)}
+            className="absolute top-0 right-0 flex h-full items-center px-2"
+          >
+            {showPassword2 ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+        <TextFieldError error={errors.confirmPassword?.message} />
+      </div>
+      <Button className="w-full" type="submit" isLoading={loading}>
         Continue
       </Button>
     </form>
