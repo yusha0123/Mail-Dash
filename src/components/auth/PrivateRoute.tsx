@@ -16,7 +16,7 @@ function PrivateRoute() {
   if (user) {
     return <Outlet />;
   }
-  return <Navigate to="/" />;
+  return <Navigate to="/" replace />;
 }
 
 export default PrivateRoute;

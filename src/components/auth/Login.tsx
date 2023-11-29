@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextFieldError } from "@/components/ui/text-field-error";
-import { Eye, EyeOff } from "lucide-react";
+import useSignIn from "@/hooks/useSignIn";
+import { auth } from "@/lib/firebase";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -13,9 +16,10 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [signInWithEmailAndPassword, loading, error] = useSignIn(auth);
 
   const onSubmit = (values: FieldValues) => {
-    console.log(values);
+    signInWithEmailAndPassword(values.email, values.password);
   };
 
   return (
@@ -23,6 +27,12 @@ const Login = () => {
       className="py-2 px-1 space-y-4 my-4"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-5 w-5" />
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      )}
       <div>
         <Input
           placeholder="Enter your email"
@@ -69,7 +79,7 @@ const Login = () => {
         </div>
         <TextFieldError error={errors.password?.message} />
       </div>
-      <Button className="w-full" type="submit">
+      <Button className="w-full" type="submit" isLoading={loading}>
         Continue
       </Button>
     </form>

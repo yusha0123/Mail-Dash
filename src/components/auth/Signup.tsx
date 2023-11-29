@@ -1,24 +1,23 @@
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextFieldError } from "@/components/ui/text-field-error";
+import useCreateUser from "@/hooks/useCreateUser";
 import { auth } from "@/lib/firebase";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import useCreateUserWithEmailAndPassword from "@/hooks/useCreateUserWithEmailAndPassword";
 
 const Signup = () => {
   const [showPassword1, setShowPassword1] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
   const {
     register,
-    reset,
     handleSubmit,
     getValues,
     formState: { errors },
   } = useForm();
-  const [createUserWithEmailAndPassword, loading] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, loading, error] = useCreateUser(auth);
 
   const onSubmit = (values: FieldValues) => {
     createUserWithEmailAndPassword(values.email, values.password);
@@ -29,6 +28,12 @@ const Signup = () => {
       className="py-2 px-1 space-y-4 my-4"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-5 w-5" />
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      )}
       <div>
         <Input
           placeholder="Enter your email"
