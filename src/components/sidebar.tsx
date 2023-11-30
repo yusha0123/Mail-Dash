@@ -1,16 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { auth } from "@/lib/firebase";
-import {
-  Inbox,
-  MoreVertical,
-  SendHorizontal,
-  Star,
-  Trash2,
-} from "lucide-react";
+import { Inbox, Pencil, SendHorizontal, Star, Trash2 } from "lucide-react";
 import { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import MailIcon from "./mail-icon";
-import SidebarItem from "./sidebar-item";
+import { SidebarItem, LogoutBtn } from "./sidebar-item";
+import { Button } from "./ui/button";
 
 type SideBarItem = {
   name: string;
@@ -24,25 +17,25 @@ const SideBar = () => {
     {
       name: "Inbox",
       href: "/inbox",
-      icon: <Inbox />,
+      icon: <Inbox className="w-5 h-5" />,
       id: 0,
     },
     {
       name: "Starred",
       href: "/starred",
-      icon: <Star />,
+      icon: <Star className="w-5 h-5" />,
       id: 1,
     },
     {
       name: "Sent",
       href: "/sent",
-      icon: <SendHorizontal />,
+      icon: <SendHorizontal className="w-5 h-5" />,
       id: 2,
     },
     {
       name: "Trash",
       href: "/trash",
-      icon: <Trash2 />,
+      icon: <Trash2 className="w-5 h-5" />,
       id: 3,
     },
   ];
@@ -56,7 +49,13 @@ const SideBar = () => {
           <MailIcon className="h-8 w-8" />
           Mail Dash
         </h1>
-
+        <Button
+          className="flex items-center gap-1 w-2/3 mx-auto mb-3"
+          variant={"custum"}
+        >
+          <Pencil className="h-4 w-4" />
+          Compose
+        </Button>
         <div className="flex-1 px-3">
           {sideBarItems.map((item: SideBarItem) => (
             <SidebarItem
@@ -67,28 +66,7 @@ const SideBar = () => {
               active={location.pathname === item.href}
             />
           ))}
-        </div>
-
-        <div className="border-t flex p-3">
-          <Avatar>
-            <AvatarImage
-              src={`https://api.multiavatar.com/Starcrasher.png?apikey=${
-                import.meta.env.MULTI_AVATAR_KEY
-              }`}
-            />
-            <AvatarFallback>
-              {auth.currentUser?.email?.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div
-            className="flex justify-between items-center
-              overflow-hidden transition-all w-52 ml-3"
-          >
-            <div className="text-xs font-semibold">
-              {auth.currentUser?.email}
-            </div>
-            <MoreVertical size={20} />
-          </div>
+          <LogoutBtn />
         </div>
       </nav>
     </aside>

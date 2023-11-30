@@ -64,3 +64,11 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.hide-extra-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

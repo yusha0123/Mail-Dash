@@ -1,4 +1,8 @@
+import { auth } from "@/lib/firebase";
+import { cn } from "@/lib/utils";
+import { LogOut } from "lucide-react";
 import { ReactElement } from "react";
+import { useSignOut } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 
 type SideBarItem = {
@@ -9,13 +13,7 @@ type SideBarItem = {
   href: string;
 };
 
-export default function SidebarItem({
-  icon,
-  name,
-  active,
-  alert,
-  href,
-}: SideBarItem) {
+export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
   return (
     <Link
       to={href}
@@ -31,10 +29,26 @@ export default function SidebarItem({
     `}
     >
       {icon}
-      <span className="overflow-hidden transition-all w-52 ml-3">{name}</span>
+      <span className="overflow-hidden transition-all ml-3">{name}</span>
       {alert && (
         <div className="absolute right-2 w-2 h-2 rounded bg-indigo-400 top-2" />
       )}
     </Link>
   );
 }
+
+export const LogoutBtn = () => {
+  const [signOut, loading] = useSignOut(auth);
+  return (
+    <div
+      className={cn(
+        "relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-indigo-50 text-gray-600",
+        loading && "cursor-not-allowed"
+      )}
+      onClick={signOut}
+    >
+      <LogOut className="w-5 h-5" />
+      <span className="overflow-hidden transition-all flex-1 ml-3">Logout</span>
+    </div>
+  );
+};
