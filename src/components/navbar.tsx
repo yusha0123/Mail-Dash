@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 const Navbar = () => {
   const [signOut, loading] = useSignOut(auth);
   return (
-    <div className="h-14 border-b shadow-sm flex justify-between md:justify-end px-4 items-center">
+    <div className="h-14 border-b flex justify-between md:justify-end px-4 items-center bg-gray-100">
       <div className="md:hidden">
         <Sheet>
           <SheetTrigger asChild>

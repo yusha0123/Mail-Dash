@@ -1,7 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,6 +14,7 @@ import Inbox from "./pages/Inbox";
 import { ToastContainer } from "react-toastify";
 import PublicRoute from "./components/auth/PublicRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import Compose from "./pages/Compose";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +24,7 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<PrivateRoute />}>
         <Route path="inbox" element={<Inbox />} />
+        <Route path="compose" element={<Compose />} />
       </Route>
     </Route>
   )
