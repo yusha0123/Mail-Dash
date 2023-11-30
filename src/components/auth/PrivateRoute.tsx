@@ -1,3 +1,4 @@
+import Layout from "@/layout";
 import { auth } from "@/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate, Outlet } from "react-router-dom";
@@ -14,7 +15,11 @@ function PrivateRoute() {
     );
   }
   if (user) {
-    return <Outlet />;
+    return (
+      <Layout>
+        <Outlet />
+      </Layout>
+    );
   }
   return <Navigate to="/" replace />;
 }

@@ -4,7 +4,7 @@ import { TextFieldError } from "@/components/ui/text-field-error";
 import useSignIn from "@/hooks/useSignIn";
 import { auth } from "@/lib/firebase";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
@@ -12,7 +12,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     register,
-    reset,
+    resetField,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -21,6 +21,12 @@ const Login = () => {
   const onSubmit = (values: FieldValues) => {
     signInWithEmailAndPassword(values.email, values.password);
   };
+
+  useEffect(() => {
+    if (error) {
+      resetField("password");
+    }
+  }, [error]);
 
   return (
     <form

@@ -5,7 +5,7 @@ import { TextFieldError } from "@/components/ui/text-field-error";
 import useCreateUser from "@/hooks/useCreateUser";
 import { auth } from "@/lib/firebase";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
 const Signup = () => {
@@ -15,6 +15,7 @@ const Signup = () => {
     register,
     handleSubmit,
     getValues,
+    resetField,
     formState: { errors },
   } = useForm();
   const [createUserWithEmailAndPassword, loading, error] = useCreateUser(auth);
@@ -22,6 +23,12 @@ const Signup = () => {
   const onSubmit = (values: FieldValues) => {
     createUserWithEmailAndPassword(values.email, values.password);
   };
+
+  useEffect(() => {
+    if (error) {
+      resetField("email");
+    }
+  }, [error]);
 
   return (
     <form
