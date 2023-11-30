@@ -49,7 +49,7 @@ const SideBar = () => {
 
   return (
     <aside className="h-full w-full">
-      <nav className="h-full flex flex-col bg-gray-100 border-r shadow-sm">
+      <nav className="h-full flex flex-col bg-gray-100">
         <h1 className="p-4 mb-3 text-lg md:text-2xl font-bold text-primary flex flex-col justify-center items-center mx-auto gap-1">
           <MailIcon className="h-8 w-8" />
           Mail Dash

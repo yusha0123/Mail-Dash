@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="sticky top-0">
           <Navbar />
         </div>
-        <section className="bg-gray-50 w-full h-[calc(100dvh-60px)] mt-auto mx-auto md:p-5">
+        <section className="bg-gray-100 w-full h-[calc(100dvh-60px)] mt-auto mx-auto md:p-5">
           {children}
         </section>
       </main>
