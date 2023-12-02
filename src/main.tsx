@@ -1,6 +1,5 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
