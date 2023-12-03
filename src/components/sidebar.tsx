@@ -1,8 +1,8 @@
-import { Inbox, Pencil, SendHorizontal, Star, Trash2 } from "lucide-react";
+import { Inbox, Pencil, SendHorizontal } from "lucide-react";
 import { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import MailIcon from "./mail-icon";
-import { SidebarItem, LogoutBtn } from "./sidebar-item";
+import { LogoutBtn, SidebarItem } from "./sidebar-item";
 
 type SideBarItem = {
   name: string;
@@ -26,22 +26,10 @@ const SideBar = () => {
       id: 1,
     },
     {
-      name: "Starred",
-      href: "/starred",
-      icon: <Star className="w-5 h-5" />,
-      id: 2,
-    },
-    {
       name: "Sent",
       href: "/sent",
       icon: <SendHorizontal className="w-5 h-5" />,
       id: 3,
-    },
-    {
-      name: "Trash",
-      href: "/trash",
-      icon: <Trash2 className="w-5 h-5" />,
-      id: 4,
     },
   ];
 
