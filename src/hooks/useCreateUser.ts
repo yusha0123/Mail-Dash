@@ -6,7 +6,7 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { useCallback, useState } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 type CreateUserOptions = {
   emailVerificationOptions?: ActionCodeSettings;

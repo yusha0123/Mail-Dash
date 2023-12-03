@@ -1,30 +1,15 @@
 import { auth, firestore } from "@/lib/firebase";
+import { SentMail, ReceivedMail } from "@/lib/types";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 interface SendEmailReturnType {
   sendEmail: (receiver: string, subject: string, body: string) => void;
   loading: boolean;
   success: boolean;
 }
-
-type receiverDocT = {
-  sender: string;
-  subject: string;
-  body: string;
-  date: Date;
-  isTrashed: boolean;
-  isRead: boolean;
-};
-
-type senderDocT = {
-  receiver: string;
-  subject: string;
-  body: string;
-  date: Date;
-};
 
 const useSendEmail = (): SendEmailReturnType => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,18 +22,18 @@ const useSendEmail = (): SendEmailReturnType => {
     }
     const currentUserEmail = auth.currentUser?.email;
 
-    const senderDoc: senderDocT = {
+    const senderDoc: SentMail = {
       receiver,
       subject,
       body,
       date: new Date(),
     };
-    const receiverDoc: receiverDocT = {
+    const receiverDoc: ReceivedMail = {
       sender: currentUserEmail!,
       subject,
       body,
       date: new Date(),
-      isTrashed: false,
+
       isRead: false,
     };
 

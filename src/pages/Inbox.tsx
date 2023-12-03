@@ -1,9 +1,9 @@
-import useSentMailStore from "@/hooks/useSentMailStore";
+import useReceivedMailStore from "@/hooks/useReceivedMailStore";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Inbox = () => {
-  const { loading, mails } = useSentMailStore();
-  // console.log(mails);
+  const { loading, mails } = useReceivedMailStore();
+  console.log(mails);
 
   if (loading) {
     return (

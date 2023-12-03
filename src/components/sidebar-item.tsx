@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 import { ReactElement } from "react";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import useOverlayStore from "@/hooks/useOverlayStore";
 
 type SideBarItem = {
   icon: ReactElement;
@@ -14,9 +15,17 @@ type SideBarItem = {
 };
 
 export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
+  const { onClose } = useOverlayStore();
+
+  const handleSheetClose = () => {
+    if (window.innerWidth <= 768) {
+      onClose();
+    }
+  };
   return (
     <Link
       to={href}
+      onClick={handleSheetClose}
       className={`
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer

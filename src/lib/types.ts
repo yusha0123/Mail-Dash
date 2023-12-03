@@ -1,5 +1,5 @@
 export type SentMail = {
-  id: string;
+  id?: string;
   receiver: string;
   subject: string;
   body: string;
@@ -7,9 +7,10 @@ export type SentMail = {
 };
 
 export type ReceivedMail = {
-  id: string;
+  id?: string;
   sender: string;
   subject: string;
   body: string;
+  isRead: boolean;
   date: Date;
 };
