@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import useReceivedMailStore from "@/hooks/useReceivedMailStore";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -36,18 +37,20 @@ const Inbox = () => {
         </Select>
         <p className="text-gray-600">{mails?.length} mails</p>
       </div>
-      <div className="py-1 overflow-y-auto">
+      <div className="overflow-y-auto">
         {mails?.map((mail, index) => (
-          <MailItem
-            id={mail.id}
-            sender={mail.sender}
-            date={mail.date}
-            subject={mail.subject}
-            body={mail.body}
-            isRead={mail.isRead}
-            key={mail.id}
-            isLast={index === mails.length - 1}
-          />
+          <>
+            <MailItem
+              id={mail.id}
+              sender={mail.sender}
+              date={mail.date}
+              subject={mail.subject}
+              body={mail.body}
+              isRead={mail.isRead}
+              key={mail.id}
+              isLast={index === mails.length - 1}
+            />
+          </>
         ))}
       </div>
     </div>
