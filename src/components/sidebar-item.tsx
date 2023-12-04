@@ -9,12 +9,12 @@ import useOverlayStore from "@/hooks/useOverlayStore";
 type SideBarItem = {
   icon: ReactElement;
   name: string;
+  count?: number;
   active?: boolean;
-  alert?: boolean;
   href: string;
 };
 
-export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
+export function SidebarItem({ icon, name, active, href, count }: SideBarItem) {
   const { onClose } = useOverlayStore();
 
   const handleSheetClose = () => {
@@ -22,6 +22,7 @@ export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
       onClose();
     }
   };
+
   return (
     <Link
       to={href}
@@ -29,7 +30,7 @@ export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
       className={`
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
-        transition-colors group
+        transition-colors group focus:outline-none
         ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
@@ -38,9 +39,11 @@ export function SidebarItem({ icon, name, active, alert, href }: SideBarItem) {
     `}
     >
       {icon}
-      <span className="overflow-hidden transition-all ml-3">{name}</span>
-      {alert && (
-        <div className="absolute right-2 w-2 h-2 rounded bg-indigo-400 top-2" />
+      <span className="overflow-hidden transition-all ml-3 flex-1">{name}</span>
+      {count !== undefined && count > 0 && (
+        <span className=" bg-red-500 text-white py-1 px-2 rounded-full text-xs">
+          {count}
+        </span>
       )}
     </Link>
   );

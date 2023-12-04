@@ -6,7 +6,7 @@ import useSendEmail from "@/hooks/useSendEmail";
 import { auth } from "@/lib/firebase";
 import JoditEditor from "jodit-react";
 import { SendHorizonal } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
 const Compose = () => {
@@ -19,7 +19,7 @@ const Compose = () => {
     formState: { errors },
   } = useForm();
   const editor = useRef(null);
-  const { sendEmail, loading, success } = useSendEmail();
+  const { sendEmail, loading } = useSendEmail();
 
   const onSubmit = (data: FieldValues) => {
     if (!data.body) {
@@ -29,7 +29,7 @@ const Compose = () => {
       });
       return;
     }
-    sendEmail(data.recipent, data.subject, data.body);
+    sendEmail(data.recipent, data.subject, data.body, handleSuccess);
   };
 
   const config = {
@@ -48,11 +48,9 @@ const Compose = () => {
     return true;
   };
 
-  useEffect(() => {
-    if (success) {
-      reset();
-    }
-  }, [success]);
+  const handleSuccess = () => {
+    reset();
+  };
 
   return (
     <div className="bg-white rounded-lg w-full h-full px-4 md:px-8 py-4 md:py-10">
@@ -61,6 +59,7 @@ const Compose = () => {
           <div>
             <Input
               placeholder="Enter recipent's email"
+              autoComplete="off"
               {...register("recipent", {
                 required: "Recipent's email is required",
                 pattern: {
@@ -79,6 +78,7 @@ const Compose = () => {
               {...register("subject", {
                 required: "Subject is required",
               })}
+              autoComplete="off"
             />
             <TextFieldError error={errors.subject?.message} />
           </div>

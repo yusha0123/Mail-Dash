@@ -6,19 +6,27 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 
 interface SendEmailReturnType {
-  sendEmail: (receiver: string, subject: string, body: string) => void;
+  sendEmail: (
+    receiver: string,
+    subject: string,
+    body: string,
+    onSuccess?: () => void
+  ) => void;
   loading: boolean;
-  success: boolean;
 }
 
 const useSendEmail = (): SendEmailReturnType => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
   const [user] = useAuthState(auth);
 
-  const sendEmail = async (receiver: string, subject: string, body: string) => {
+  const sendEmail = async (
+    receiver: string,
+    subject: string,
+    body: string,
+    onSuccess?: () => void
+  ) => {
     if (!user) {
-      return toast.error("Your are unauthenticated!");
+      return toast.error("You are unauthenticated!");
     }
     const currentUserEmail = auth.currentUser?.email;
 
@@ -33,7 +41,6 @@ const useSendEmail = (): SendEmailReturnType => {
       subject,
       body,
       date: new Date(),
-
       isRead: false,
     };
 
@@ -51,18 +58,20 @@ const useSendEmail = (): SendEmailReturnType => {
         ),
       ]);
 
-      setSuccess(true);
       toast.success("Mail sent successfully!");
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.log(error);
       toast.error("Failed to send mail!");
     } finally {
       setLoading(false);
-      setSuccess(false);
     }
   };
 
-  return { sendEmail, loading, success };
+  return { sendEmail, loading };
 };
 
 export default useSendEmail;

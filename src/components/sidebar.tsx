@@ -3,6 +3,8 @@ import { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import MailIcon from "./mail-icon";
 import { LogoutBtn, SidebarItem } from "./sidebar-item";
+import useReceivedMailStore from "@/hooks/useReceivedMailStore";
+import { ReceivedMail } from "@/lib/types";
 
 type SideBarItem = {
   name: string;
@@ -34,6 +36,16 @@ const SideBar = () => {
   ];
 
   const location = useLocation();
+  const { loading, mails } = useReceivedMailStore();
+
+  const unreadMails =
+    !loading &&
+    mails?.reduce((acc: number, value: ReceivedMail) => {
+      if (!value.isRead) {
+        acc++;
+      }
+      return acc;
+    }, 0);
 
   return (
     <aside className="h-full w-full">
@@ -49,6 +61,11 @@ const SideBar = () => {
               href={item.href}
               name={item.name}
               key={item.id}
+              count={
+                item.name === "Inbox"
+                  ? (unreadMails as number | undefined)
+                  : undefined
+              }
               active={location.pathname === item.href}
             />
           ))}

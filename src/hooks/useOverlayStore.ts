@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type overlayType = "mobileSidebar";
+export type overlayType = "mobileSidebar" | "profileModal";
 
 interface overlayStore {
   type: overlayType | null;
