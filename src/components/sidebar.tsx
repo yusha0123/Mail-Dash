@@ -66,7 +66,7 @@ const SideBar = () => {
                   ? (unreadMails as number | undefined)
                   : undefined
               }
-              active={location.pathname === item.href}
+              active={location.pathname.includes(item.href)}
             />
           ))}
           <LogoutBtn />

@@ -1,7 +1,6 @@
 import { ReceivedMail } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { Dot } from "lucide-react";
-import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
 const MailItem = ({
@@ -17,8 +16,6 @@ const MailItem = ({
     return { __html: htmlString };
   };
 
-  const formattedDate = format(new Date(date.seconds * 1000), "MMM dd yyyy");
-
   return (
     <Link
       to={`/inbox/${id}`}
@@ -28,7 +25,7 @@ const MailItem = ({
         {isRead ? (
           <span className="w-10 h-10 block" />
         ) : (
-          <Dot className="text-blue-500 w-10 h-10" />
+          <Dot className="text-blue-600 w-10 h-10" />
         )}
       </div>
       <div
@@ -39,7 +36,7 @@ const MailItem = ({
       >
         <div className="w-full md:w-1/4 flex justify-between md:inline">
           <h3 className="hide-extra-text">{sender}</h3>
-          <p className="md:hidden mr-2">{formattedDate}</p>
+          <p className="md:hidden mr-2">{formatDate({ date })}</p>
         </div>
         <div className="w-3/4 flex md:flex-row flex-col items-start md:items-center md:gap-2 flex-1">
           <p className="w-full md:w-fit md:max-w-[75%] hide-extra-text">
@@ -51,7 +48,7 @@ const MailItem = ({
             className="hide-extra-text font-normal"
           />
         </div>
-        <p className="px-4 hidden md:block">{formattedDate}</p>
+        <p className="px-4 hidden md:block">{formatDate({ date })}</p>
       </div>
     </Link>
   );

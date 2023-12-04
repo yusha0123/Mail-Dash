@@ -33,8 +33,8 @@ export function SidebarItem({ icon, name, active, href, count }: SideBarItem) {
         transition-colors group focus:outline-none
         ${
           active
-            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-            : "hover:bg-indigo-50 text-gray-600"
+            ? "bg-blue-500 text-gray-100"
+            : "hover:bg-gray-300 text-gray-600"
         }
     `}
     >
@@ -54,7 +54,7 @@ export const LogoutBtn = () => {
   return (
     <div
       className={cn(
-        "relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-indigo-50 text-gray-600",
+        "relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-gray-300 text-gray-600",
         loading && "cursor-not-allowed"
       )}
       onClick={signOut}

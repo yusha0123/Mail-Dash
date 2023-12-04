@@ -18,6 +18,7 @@ import Sent from "./pages/Sent";
 import { SentMail, ReceivedMail } from "./lib/types";
 import useSentMailStore from "./hooks/useSentMailStore";
 import useReceivedMailStore from "./hooks/useReceivedMailStore";
+import InboxMail from "./pages/InboxMail";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -69,6 +70,7 @@ const App = () => {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="inbox" element={<Inbox />} />
+          <Route path="inbox/:id" element={<InboxMail />} />
           <Route path="compose" element={<Compose />} />
           <Route path="sent" element={<Sent />} />
         </Route>
