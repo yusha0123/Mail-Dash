@@ -3,7 +3,10 @@ export type SentMail = {
   receiver: string;
   subject: string;
   body: string;
-  date: Date;
+  date: {
+    seconds: number;
+    nanoseconds: number;
+  };
 };
 
 export type ReceivedMail = {
@@ -12,5 +15,8 @@ export type ReceivedMail = {
   subject: string;
   body: string;
   isRead: boolean;
-  date: Date;
+  date: {
+    seconds: number;
+    nanoseconds: number;
+  };
 };
