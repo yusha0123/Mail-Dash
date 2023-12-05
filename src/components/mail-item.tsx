@@ -19,7 +19,10 @@ const MailItem = ({
   return (
     <Link
       to={`/inbox/${id}`}
-      className={cn("flex mail-item border-t", isLast && "border-b")}
+      className={cn(
+        "flex mail-item border-t py-1 md:py-0",
+        isLast && "border-b"
+      )}
     >
       <div className="h-full">
         {isRead ? (

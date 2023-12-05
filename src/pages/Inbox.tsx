@@ -1,3 +1,4 @@
+import Loader from "@/components/loader";
 import MailItem from "@/components/mail-item";
 import {
   Select,
@@ -7,23 +8,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useReceivedMailStore from "@/hooks/useReceivedMailStore";
-import ClipLoader from "react-spinners/ClipLoader";
 
 const Inbox = () => {
   const { loading, mails } = useReceivedMailStore();
-  console.log(mails);
 
   if (loading) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <ClipLoader size={50} />
-      </div>
-    );
+    return <Loader style="h-full" />;
   }
 
   return (
     <div className="bg-white rounded-lg w-full h-full md:pb-10 md:pt-4 flex flex-col gap-4">
-      {mails?.length > 0 ? (
+      {!loading && mails?.length > 0 ? (
         <>
           <div className="flex h-10 item-center justify-between px-4 md:px-6 items-center mt-3 md:mt-0">
             <Select>
@@ -40,20 +35,18 @@ const Inbox = () => {
               {mails?.length === 1 ? "1 mail" : `${mails?.length} mails`}
             </p>
           </div>
-          <div className="overflow-y-auto py-1">
+          <div className="overflow-y-auto p-1">
             {mails?.map((mail, index) => (
-              <>
-                <MailItem
-                  id={mail.id}
-                  sender={mail.sender}
-                  date={mail.date}
-                  subject={mail.subject}
-                  body={mail.body}
-                  isRead={mail.isRead}
-                  key={mail.id}
-                  isLast={index === mails.length - 1}
-                />
-              </>
+              <MailItem
+                id={mail.id}
+                sender={mail.sender}
+                date={mail.date}
+                subject={mail.subject}
+                body={mail.body}
+                isRead={mail.isRead}
+                isLast={index === mails.length - 1}
+                key={mail.id}
+              />
             ))}
           </div>
         </>

@@ -41,7 +41,12 @@ export function SidebarItem({ icon, name, active, href, count }: SideBarItem) {
       {icon}
       <span className="overflow-hidden transition-all ml-3 flex-1">{name}</span>
       {count !== undefined && count > 0 && (
-        <span className=" bg-red-500 text-white py-1 px-2 rounded-full text-xs">
+        <span
+          className={cn(
+            " bg-gray-400 text-black py-1 px-2 rounded-full text-xs",
+            active && "bg-gray-300"
+          )}
+        >
           {count}
         </span>
       )}

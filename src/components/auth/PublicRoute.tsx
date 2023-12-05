@@ -7,7 +7,7 @@ function PublicRoute() {
   const [user, loading] = useAuthState(auth);
 
   if (loading) {
-    return <Loader />;
+    return <Loader style="h-screen" />;
   }
   if (!user) {
     return <Outlet />;

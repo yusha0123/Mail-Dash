@@ -1,8 +1,8 @@
 import ClipLoader from "react-spinners/ClipLoader";
 
-const Loader = () => {
+const Loader = ({ style }: { style: "h-screen" | "h-full" }) => {
   return (
-    <div className="h-screen w-full flex items-center justify-center">
+    <div className={`${style} w-full flex items-center justify-center`}>
       <ClipLoader size={50} />
     </div>
   );

@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import { auth, firestore } from "@/lib/firebase";
-import { collection, query } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -25,17 +25,20 @@ const App = () => {
   const { isLoading: isSentMailLoading, updateSentMails } = useSentMailStore();
   const { isLoading: isReceivedMailLoading, updateReceivedMails } =
     useReceivedMailStore();
-
   const [sentMails, loadingSentMails] = useCollection(
     user
-      ? query(collection(firestore, "mails", auth.currentUser?.email!, "sent"))
+      ? query(
+          collection(firestore, "mails", auth.currentUser?.email!, "sent"),
+          orderBy("date", "desc")
+        )
       : null
   );
 
   const [receivedMails, loadingReceivedMails] = useCollection(
     user
       ? query(
-          collection(firestore, "mails", auth.currentUser?.email!, "received")
+          collection(firestore, "mails", auth.currentUser?.email!, "received"),
+          orderBy("date", "desc")
         )
       : null
   );
