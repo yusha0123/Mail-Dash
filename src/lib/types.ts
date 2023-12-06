@@ -1,12 +1,14 @@
+export interface FirebaseTimestamp {
+  seconds: number;
+  nanoseconds: number;
+}
+
 export type SentMail = {
   id?: string;
   receiver: string;
   subject: string;
   body: string;
-  date: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  date: FirebaseTimestamp | Date;
 };
 
 export type ReceivedMail = {
@@ -15,8 +17,5 @@ export type ReceivedMail = {
   subject: string;
   body: string;
   isRead: boolean;
-  date: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  date: FirebaseTimestamp | Date;
 };

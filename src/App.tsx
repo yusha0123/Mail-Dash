@@ -1,24 +1,24 @@
+import { auth, firestore } from "@/lib/firebase";
+import { collection, orderBy, query } from "firebase/firestore";
 import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import { auth, firestore } from "@/lib/firebase";
-import { collection, orderBy, query } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";
+import useReceivedMailStore from "./hooks/useReceivedMailStore";
+import useSentMailStore from "./hooks/useSentMailStore";
+import { ReceivedMail, SentMail } from "./lib/types";
 import Compose from "./pages/Compose";
 import Inbox from "./pages/Inbox";
+import InboxMail from "./pages/InboxMail";
 import Root from "./pages/Root";
 import Sent from "./pages/Sent";
-import { SentMail, ReceivedMail } from "./lib/types";
-import useSentMailStore from "./hooks/useSentMailStore";
-import useReceivedMailStore from "./hooks/useReceivedMailStore";
-import InboxMail from "./pages/InboxMail";
 
 const App = () => {
   const [user] = useAuthState(auth);

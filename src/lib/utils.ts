@@ -30,3 +30,7 @@ export function formatDate({ date }: formatDate) {
     return format(inputDate, "MMM dd yyyy");
   }
 }
+
+export const createMarkup = (htmlString: string) => {
+  return { __html: htmlString };
+};
