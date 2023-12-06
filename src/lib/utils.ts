@@ -1,20 +1,19 @@
 import { clsx, type ClassValue } from "clsx";
 import { format, isSameYear } from "date-fns";
 import { twMerge } from "tailwind-merge";
+import { FirebaseTimestamp } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type formatDate = {
-  date: {
-    seconds: number;
-    nanoseconds: number;
-  };
+type formatDateInput = {
+  date: FirebaseTimestamp | Date;
 };
-export function formatDate({ date }: formatDate) {
+
+export function formatDate({ date }: formatDateInput) {
   const currentDate = new Date();
-  const inputDate = new Date(date.seconds * 1000);
+  const inputDate = date instanceof Date ? date : new Date(date.seconds * 1000);
 
   const diffInSeconds =
     Math.abs(currentDate.getTime() - inputDate.getTime()) / 1000;

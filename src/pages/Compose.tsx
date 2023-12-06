@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { TextFieldError } from "@/components/ui/text-field-error";
 import useSendEmail from "@/hooks/useSendEmail";
 import { auth } from "@/lib/firebase";
@@ -83,7 +82,7 @@ const Compose = () => {
             <TextFieldError error={errors.subject?.message} />
           </div>
         </div>
-        <ScrollArea>
+        <div className="overflow-y-auto">
           <JoditEditor
             ref={editor}
             value=""
@@ -91,7 +90,7 @@ const Compose = () => {
             onChange={handleJoditChange}
           />
           <TextFieldError error={errors.body?.message} />
-        </ScrollArea>
+        </div>
         <div className="flex justify-center">
           <Button type="submit" isLoading={loading}>
             {!loading && <SendHorizonal className="mr-2 h-4 w-4" />}

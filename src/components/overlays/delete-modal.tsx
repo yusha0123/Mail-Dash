@@ -37,18 +37,18 @@ const DeleteModal = () => {
           <AlertDialogTitle className="text-2xl font-bold text-center mb-5">
             Are you absolutely sure?
           </AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="text-sm md:text-md text-center">
             This action cannot be undone and it will permanently this mail.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="mt-3">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button
             variant={"destructive"}
             isLoading={loading}
             onClick={handleDelete}
           >
-            Delete
+            Confirm
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

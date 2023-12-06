@@ -1,9 +1,9 @@
-import { ReceivedMail } from "@/lib/types";
+import { ReceivedMail as Received_Mail } from "@/lib/types";
 import { cn, createMarkup, formatDate } from "@/lib/utils";
 import { Dot } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const MailItem = ({
+const ReceivedMail = ({
   id,
   sender,
   subject,
@@ -11,7 +11,7 @@ const MailItem = ({
   isRead,
   date,
   isLast,
-}: ReceivedMail & { isLast?: boolean }) => {
+}: Received_Mail & { isLast?: boolean }) => {
   return (
     <Link
       to={`/inbox/${id}`}
@@ -53,4 +53,4 @@ const MailItem = ({
   );
 };
 
-export default MailItem;
+export default ReceivedMail;

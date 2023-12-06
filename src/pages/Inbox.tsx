@@ -1,5 +1,5 @@
 import Loader from "@/components/loader";
-import MailItem from "@/components/mail-item";
+import ReceivedMail from "@/components/received-mail";
 import {
   Select,
   SelectContent,
@@ -37,7 +37,7 @@ const Inbox = () => {
           </div>
           <div className="overflow-y-auto p-1">
             {mails?.map((mail, index) => (
-              <MailItem
+              <ReceivedMail
                 id={mail.id}
                 sender={mail.sender}
                 date={mail.date}

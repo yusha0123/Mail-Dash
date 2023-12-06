@@ -1,4 +1,5 @@
 import Loader from "@/components/loader";
+import SentMail from "@/components/sent-mail";
 import useSentMailStore from "@/hooks/useSentMailStore";
 import { Link } from "react-router-dom";
 
@@ -21,18 +22,17 @@ const Sent = () => {
             </p>
           </div>
           <div className="overflow-y-auto p-1">
-            {/* {mails?.map((mail, index) => (
-              <MailItem
+            {mails?.map((mail, index) => (
+              <SentMail
                 id={mail.id}
-                sender={mail.sender}
+                receiver={mail.receiver}
                 date={mail.date}
                 subject={mail.subject}
                 body={mail.body}
-                isRead={mail.isRead}
                 isLast={index === mails.length - 1}
                 key={mail.id}
               />
-            ))} */}
+            ))}
           </div>
         </>
       ) : (
