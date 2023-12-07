@@ -43,6 +43,7 @@ const Inbox = () => {
         <Select
           onValueChange={(value) => setFilterType(value)}
           value={filterType}
+          disabled={mails?.length === 0}
         >
           <SelectTrigger className="w-[8rem]">
             <SelectValue />

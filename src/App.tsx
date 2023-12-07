@@ -14,6 +14,7 @@ import PublicRoute from "./components/auth/PublicRoute";
 import useReceivedMailStore from "./hooks/useReceivedMailStore";
 import useSentMailStore from "./hooks/useSentMailStore";
 import { ReceivedMail, SentMail as Sent_Mail } from "./lib/types";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -80,6 +81,7 @@ const App = () => {
           <Route path="sent" element={<Sent />} />
           <Route path="sent/:id" element={<SentMail />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

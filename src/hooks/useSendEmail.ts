@@ -1,5 +1,6 @@
 import { auth, firestore } from "@/lib/firebase";
-import { SentMail, ReceivedMail } from "@/lib/types";
+import { ReceivedMail, SentMail } from "@/lib/types";
+import { checkIfUserExists } from "@/lib/utils";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,7 +11,8 @@ interface SendEmailReturnType {
     receiver: string,
     subject: string,
     body: string,
-    onSuccess?: () => void
+    onSuccess?: () => void,
+    onInvalidEmail?: () => void
   ) => void;
   loading: boolean;
 }
@@ -23,7 +25,8 @@ const useSendEmail = (): SendEmailReturnType => {
     receiver: string,
     subject: string,
     body: string,
-    onSuccess?: () => void
+    onSuccess?: () => void,
+    onInvalidEmail?: () => void
   ) => {
     if (!user) {
       return toast.error("You are unauthenticated!");
@@ -46,6 +49,15 @@ const useSendEmail = (): SendEmailReturnType => {
 
     try {
       setLoading(true);
+
+      const userExists = await checkIfUserExists(receiver);
+
+      if (!userExists) {
+        if (onInvalidEmail) {
+          onInvalidEmail();
+        }
+        return toast.error("User doesn't exist!");
+      }
 
       await Promise.all([
         addDoc(

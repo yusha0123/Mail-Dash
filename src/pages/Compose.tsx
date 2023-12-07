@@ -14,6 +14,7 @@ const Compose = () => {
     register,
     setValue,
     reset,
+    resetField,
     setError,
     formState: { errors },
   } = useForm();
@@ -28,7 +29,13 @@ const Compose = () => {
       });
       return;
     }
-    sendEmail(data.recipent, data.subject, data.body, handleSuccess);
+    sendEmail(
+      data.recipent,
+      data.subject,
+      data.body,
+      handleSuccess,
+      handleInvalidEmail
+    );
   };
 
   const config = {
@@ -49,6 +56,10 @@ const Compose = () => {
 
   const handleSuccess = () => {
     reset();
+  };
+
+  const handleInvalidEmail = () => {
+    resetField("recipent");
   };
 
   return (
