@@ -12,7 +12,7 @@ const SentMail = ({
 }: Sent_Mail & { isLast?: boolean }) => {
   return (
     <Link
-      to={`/inbox/${id}`}
+      to={`/sent/${id}`}
       className={cn("flex mail-item px-3 py-2 border-t", isLast && "border-b")}
     >
       <div className="w-full flex flex-col md:flex-row items-start md:items-center text-sm">

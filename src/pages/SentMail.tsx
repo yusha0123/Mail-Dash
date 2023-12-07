@@ -8,50 +8,29 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import useOverlayStore from "@/hooks/useOverlayStore";
-import useReceivedMailStore from "@/hooks/useReceivedMailStore";
-import { auth, firestore } from "@/lib/firebase";
-import { ReceivedMail } from "@/lib/types";
+import useSentMailStore from "@/hooks/useSentMailStore";
+import { auth } from "@/lib/firebase";
+import { SentMail as Sent_Mail } from "@/lib/types";
 import { createMarkup, formatDate } from "@/lib/utils";
-import { doc, updateDoc } from "firebase/firestore";
 import { ArrowLeft, Trash2 } from "lucide-react";
-import toast from "react-hot-toast";
 import { Link, Navigate, useParams } from "react-router-dom";
 
-const InboxMail = () => {
+const SentMail = () => {
   const { id } = useParams();
-  const { loading, mails } = useReceivedMailStore();
+  const { loading, mails } = useSentMailStore();
   const { onOpen } = useOverlayStore();
 
   if (loading) {
     return <Loader style="h-full" />;
   }
 
-  const currentMail: ReceivedMail | undefined = mails?.find(
+  const currentMail: Sent_Mail | undefined = mails?.find(
     (mail) => mail.id === id
   );
 
   if (!currentMail) {
-    return <Navigate to="/inbox" replace />;
+    return <Navigate to="/sent" replace />;
   }
-
-  (async () => {
-    if (!currentMail || currentMail.isRead) return;
-    const docRef = doc(
-      firestore,
-      "mails",
-      auth.currentUser?.email!,
-      "received",
-      id!
-    );
-    try {
-      await updateDoc(docRef, {
-        isRead: true,
-      });
-    } catch (error) {
-      toast.error("Something went wrong!");
-      console.log(error);
-    }
-  })();
 
   const formattedDate = formatDate({ date: currentMail.date }, true);
 
@@ -62,7 +41,7 @@ const InboxMail = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to={"/inbox"}
+                to={"/sent"}
                 className={buttonVariants({
                   variant: "outline",
                   size: "icon",
@@ -72,7 +51,7 @@ const InboxMail = () => {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Back to Inbox</p>
+              <p>Back to Sent</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -85,7 +64,7 @@ const InboxMail = () => {
                 disabled={!currentMail}
                 onClick={() =>
                   onOpen("deleteModal", {
-                    mailType: "received",
+                    mailType: "sent",
                     id: currentMail?.id,
                   })
                 }
@@ -105,8 +84,8 @@ const InboxMail = () => {
           {currentMail?.subject}
         </h3>
         <div className="rounded-lg p-4 bg-[#F1EFEF] w-fit flex items-start flex-col">
-          <p className="font-semibold">From: {currentMail?.sender}</p>
-          <p>To: {auth.currentUser?.email}</p>
+          <p className="font-semibold">To: {auth.currentUser?.email}</p>
+          <p>From: {currentMail?.receiver}(you)</p>
           <p>Date: {formattedDate} </p>
         </div>
         <h4
@@ -118,4 +97,4 @@ const InboxMail = () => {
   );
 };
 
-export default InboxMail;
+export default SentMail;

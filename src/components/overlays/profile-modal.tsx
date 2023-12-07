@@ -16,6 +16,11 @@ const ProfileModal = () => {
   const isModalOpen = isOpen && type === "profileModal";
   const [signOut, loading] = useSignOut(auth);
 
+  const handleSignOut = () => {
+    onClose();
+    signOut();
+  };
+
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
@@ -39,7 +44,7 @@ const ProfileModal = () => {
             </h3>
             <Button
               variant={"destructive"}
-              onClick={signOut}
+              onClick={handleSignOut}
               isLoading={loading}
             >
               <LogOut className="w-4 h-4 mr-2" />

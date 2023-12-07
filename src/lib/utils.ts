@@ -11,9 +11,13 @@ type formatDateInput = {
   date: FirebaseTimestamp | Date;
 };
 
-export function formatDate({ date }: formatDateInput) {
+export function formatDate({ date }: formatDateInput, showFullDate = false) {
   const currentDate = new Date();
   const inputDate = date instanceof Date ? date : new Date(date.seconds * 1000);
+
+  if (showFullDate) {
+    return format(inputDate, "dd MMM yyyy 'at' h:mm a");
+  }
 
   const diffInSeconds =
     Math.abs(currentDate.getTime() - inputDate.getTime()) / 1000;
