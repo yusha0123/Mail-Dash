@@ -104,13 +104,13 @@ const InboxMail = () => {
         <h3 className="md:text-2xl text-xl lg:text-3xl tracking-wide">
           {currentMail?.subject}
         </h3>
-        <div className="rounded-lg p-4 bg-[#F1EFEF] w-fit flex items-start flex-col">
+        <div className="rounded-lg text-xs md:text-sm p-4 bg-[#F1EFEF] w-fit flex items-start flex-col">
           <p className="font-semibold">From: {currentMail?.sender}</p>
-          <p>To: {auth.currentUser?.email}</p>
+          <p>To: {auth.currentUser?.email} (you)</p>
           <p>Date: {formattedDate} </p>
         </div>
         <h4
-          className="text-lg"
+          className="text-md md:text-lg"
           dangerouslySetInnerHTML={createMarkup(currentMail?.body!)}
         />
       </div>

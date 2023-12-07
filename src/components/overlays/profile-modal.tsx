@@ -39,7 +39,7 @@ const ProfileModal = () => {
                 {auth.currentUser?.email?.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <h3 className="font-semibold text-gray-500">
+            <h3 className="font-semibold text-gray-700">
               {auth.currentUser?.email}
             </h3>
             <Button

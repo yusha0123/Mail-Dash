@@ -1,6 +1,6 @@
 import { auth, firestore } from "@/lib/firebase";
 import { collection, orderBy, query } from "firebase/firestore";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import {
@@ -14,12 +14,6 @@ import PublicRoute from "./components/auth/PublicRoute";
 import useReceivedMailStore from "./hooks/useReceivedMailStore";
 import useSentMailStore from "./hooks/useSentMailStore";
 import { ReceivedMail, SentMail as Sent_Mail } from "./lib/types";
-import Compose from "./pages/Compose";
-import Inbox from "./pages/Inbox";
-import InboxMail from "./pages/InboxMail";
-import Root from "./pages/Root";
-import Sent from "./pages/Sent";
-import SentMail from "./pages/SentMail";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -65,6 +59,13 @@ const App = () => {
     }) as ReceivedMail[];
     updateReceivedMails(mails);
   }, [receivedMails, loadingReceivedMails]);
+
+  const Root = lazy(() => import("./pages/Root"));
+  const Inbox = lazy(() => import("./pages/Inbox"));
+  const InboxMail = lazy(() => import("./pages/InboxMail"));
+  const Sent = lazy(() => import("./pages/Sent"));
+  const SentMail = lazy(() => import("./pages/SentMail"));
+  const Compose = lazy(() => import("./pages/Compose"));
 
   const router = createBrowserRouter(
     createRoutesFromElements(
