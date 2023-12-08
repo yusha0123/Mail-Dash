@@ -5,7 +5,7 @@ import useSendEmail from "@/hooks/useSendEmail";
 import { auth } from "@/lib/firebase";
 import JoditEditor from "jodit-react";
 import { SendHorizonal } from "lucide-react";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
 const Compose = () => {
@@ -54,13 +54,13 @@ const Compose = () => {
     return true;
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = useCallback(() => {
     reset();
-  };
+  }, [reset]);
 
-  const handleInvalidEmail = () => {
-    resetField("recipent");
-  };
+  const handleInvalidEmail = useCallback(() => {
+    resetField("recipient");
+  }, [resetField]);
 
   return (
     <div className="bg-white rounded-lg w-full h-full px-4 md:px-8 py-4 md:py-10">

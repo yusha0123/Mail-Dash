@@ -16,7 +16,7 @@ const ReceivedMail = ({
     <Link
       to={`/inbox/${id}`}
       className={cn(
-        "flex mail-item border-t py-1 md:py-0",
+        "flex mail-item border-t transition duration-300 ease-in-out py-1 md:py-0",
         isLast && "border-b"
       )}
     >

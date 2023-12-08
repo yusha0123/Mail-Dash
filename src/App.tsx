@@ -1,6 +1,6 @@
 import { auth, firestore } from "@/lib/firebase";
 import { collection, orderBy, query } from "firebase/firestore";
-import { lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import {
@@ -14,7 +14,7 @@ import PublicRoute from "./components/auth/PublicRoute";
 import useReceivedMailStore from "./hooks/useReceivedMailStore";
 import useSentMailStore from "./hooks/useSentMailStore";
 import { ReceivedMail, SentMail as Sent_Mail } from "./lib/types";
-import NotFound from "./pages/NotFound";
+import Loader from "./components/loader";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -67,6 +67,7 @@ const App = () => {
   const Sent = lazy(() => import("./pages/Sent"));
   const SentMail = lazy(() => import("./pages/SentMail"));
   const Compose = lazy(() => import("./pages/Compose"));
+  const NotFound = lazy(() => import("./pages/NotFound"));
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -81,7 +82,14 @@ const App = () => {
           <Route path="sent" element={<Sent />} />
           <Route path="sent/:id" element={<SentMail />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<Loader style="h-screen" />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
       </Route>
     )
   );

@@ -13,7 +13,10 @@ const SentMail = ({
   return (
     <Link
       to={`/sent/${id}`}
-      className={cn("flex mail-item px-3 py-2 border-t", isLast && "border-b")}
+      className={cn(
+        "flex mail-item transition duration-300 ease-in-out px-3 py-2 border-t",
+        isLast && "border-b"
+      )}
     >
       <div className="w-full flex flex-col md:flex-row items-start md:items-center text-sm">
         <div className="w-full md:w-1/4 flex justify-between md:inline">
