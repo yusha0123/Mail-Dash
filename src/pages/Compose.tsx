@@ -59,7 +59,7 @@ const Compose = () => {
   }, [reset]);
 
   const handleInvalidEmail = useCallback(() => {
-    resetField("recipient");
+    resetField("recipent");
   }, [resetField]);
 
   return (

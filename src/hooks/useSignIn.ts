@@ -28,7 +28,10 @@ export default (auth: Auth): EmailAndPasswordActionHook => {
 
         return user;
       } catch (err: any) {
-        if (err.code === "auth/invalid-login-credentials") {
+        if (
+          err.code === "auth/invalid-login-credentials" ||
+          err.code === "auth/wrong-password"
+        ) {
           setError("Invalid credentials!");
         } else if (err.code === "auth/invalid-email") {
           setError("Please enter a valid email!");
