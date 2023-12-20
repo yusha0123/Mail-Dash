@@ -1,6 +1,10 @@
 import { create } from "zustand";
 
-export type overlayType = "mobileSidebar" | "profileModal" | "deleteModal";
+export type overlayType =
+  | "mobileSidebar"
+  | "profileModal"
+  | "deleteModal"
+  | "resetPasswordModal";
 
 interface AdditionalData {
   mailType?: "sent" | "received";

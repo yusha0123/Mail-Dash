@@ -38,8 +38,10 @@ const Compose = () => {
     );
   };
 
+  const textAreaHeight = window.innerHeight / 2;
+
   const config = {
-    height: 300,
+    height: textAreaHeight,
     placeholder: "Enter your message...",
   };
 
@@ -63,7 +65,7 @@ const Compose = () => {
   }, [resetField]);
 
   return (
-    <div className="bg-white rounded-lg w-full h-full px-4 md:px-8 py-4 md:py-10">
+    <div className="bg-white rounded-lg w-full h-full px-4 md:px-8 py-4 md:py-10 overflow-y-auto overflow-x-hidden">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full">
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           <div>
@@ -93,7 +95,7 @@ const Compose = () => {
             <TextFieldError error={errors.subject?.message} />
           </div>
         </div>
-        <div className="overflow-y-auto">
+        <div>
           <JoditEditor
             ref={editor}
             value=""

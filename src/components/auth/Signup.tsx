@@ -31,10 +31,7 @@ const Signup = () => {
   }, [error]);
 
   return (
-    <form
-      className="py-2 px-1 space-y-4 my-4"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="py-2 px-1 space-y-3" onSubmit={handleSubmit(onSubmit)}>
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-5 w-5" />
