@@ -33,26 +33,25 @@ const useMailService = () => {
 
   useEffect(() => {
     isSentMailLoading(loadingSentMails);
-    const mails = sentMails?.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as SentMail[];
+    const mails = sentMails?.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    }) as SentMail[];
     updateSentMails(mails);
-  }, [sentMails, loadingSentMails, isSentMailLoading, updateSentMails]);
+  }, [sentMails, loadingSentMails]);
 
   useEffect(() => {
     isReceivedMailLoading(loadingReceivedMails);
-    const mails = receivedMails?.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as ReceivedMail[];
+    const mails = receivedMails?.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    }) as ReceivedMail[];
     updateReceivedMails(mails);
-  }, [
-    receivedMails,
-    loadingReceivedMails,
-    isReceivedMailLoading,
-    updateReceivedMails,
-  ]);
+  }, [receivedMails, loadingReceivedMails]);
 };
 
 export default useMailService;

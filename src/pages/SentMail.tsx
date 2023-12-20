@@ -14,6 +14,7 @@ import { SentMail as Sent_Mail } from "@/lib/types";
 import { createMarkup, formatDate } from "@/lib/utils";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SentMail = () => {
   const { id } = useParams();
@@ -35,7 +36,13 @@ const SentMail = () => {
   const formattedDate = formatDate({ date: currentMail.date }, true);
 
   return (
-    <div className="bg-white rounded-lg w-full h-full md:pb-10 pt-3 flex flex-col gap-3">
+    <motion.div
+      initial={{ opacity: 0, y: "100vh" }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: "100vh" }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+      className="bg-white rounded-lg w-full h-full md:pb-10 pt-3 flex flex-col gap-3"
+    >
       <div className="flex items-center justify-between px-4 md:px-6 lg:px-8">
         <TooltipProvider delayDuration={0}>
           <Tooltip>
@@ -93,7 +100,7 @@ const SentMail = () => {
           dangerouslySetInnerHTML={createMarkup(currentMail?.body!)}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

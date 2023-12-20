@@ -1,5 +1,4 @@
-import { useForm, FieldValues } from "react-hook-form";
-import useOverlayStore from "@/hooks/useOverlayStore";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,10 +7,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { TextFieldError } from "@/components/ui/text-field-error";
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/firebase";
-import { Mail } from "lucide-react";
+import useOverlayStore from "@/hooks/useOverlayStore";
 import useSendPasswordResetEmail from "@/hooks/useSendPasswordResetEmail.ts";
+import { auth } from "@/lib/firebase";
+import { FieldValues, useForm } from "react-hook-form";
 
 const ResetPasswordModal = () => {
   const { type, onClose, isOpen } = useOverlayStore();
@@ -42,7 +41,7 @@ const ResetPasswordModal = () => {
           >
             <div>
               <Input
-                placeholder="Enter your email"
+                placeholder="Enter your registered email"
                 autoComplete="off"
                 {...register("email", {
                   required: "Email Address is required",
@@ -61,8 +60,7 @@ const ResetPasswordModal = () => {
               type="submit"
               isLoading={sending}
             >
-              Send mail
-              <Mail className="w-4 h-4 ml-2" />
+              Proceed
             </Button>
           </form>
         </DialogHeader>
